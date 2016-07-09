@@ -8,6 +8,9 @@
     <script src="/angular/angular.js" defer></script>
     <script src="/angular-ui-router/release/angular-ui-router.js" defer></script>
     <script src="/js/module.js" defer></script>
+    <script src="/js/playlist/playlist.controllers.js" defer></script>
+    <script src="/js/playlist/playlist.factory.js" defer></script>
+    <script src="/js/playlist/playlist.states.js" defer></script>
     <script src="/js/album/album.controllers.js" defer></script>
     <script src="/js/album/album.factory.js" defer></script>
     <script src="/js/album/album.states.js" defer></script>
@@ -37,15 +40,21 @@
           </section>
           <hr>
           <section>
+            <div ng-controller="PlaylistsCtrl">
             <h4 class="text-muted">PLAYLISTS</h4>
+              <p ng-repeat="playlist in playlists">
+                <a ui-sref="showPlaylist({playlistId: playlist.id})">{{ playlist.name }}</a>
+              </p>
+            </div>
             <p>
-              <a class="btn btn-primary btn-block"><span class="glyphicon glyphicon-plus"></span> PLAYLIST</a>
+              <a class="btn btn-primary btn-block" ui-sref="newPlaylist"><span class="glyphicon glyphicon-plus"></span> PLAYLIST</a>
             </p>
           </section>
         </sidebar>
       </div>
 
       <div class="col-xs-10">
+        <!-- Main Frame -->
         <ui-view></ui-view>
       </div>
 

@@ -1,0 +1,46 @@
+<div>
+  <h3>{{ playlist.name }}</h3>
+
+  <div class="well">
+  <form name="addSongForm" class="form-horizontal" ng-submit="addSong()">
+    <fieldset>
+      <div class="form-group">
+        <label class="col-xs-2" control-label">Add Songs</label>
+          <div class="col-xs-10">
+            <select name="songSelect" class="form-control" ng-model="selectedSong" ng-options="optionSong as optionSong.name for optionSong in songs" required></select>
+          </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-10 col-xs-offset-2">
+          <button type="submit" class="btn btn-success" ng-disabled="addSongForm.songSelect.$invalid">Add</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  </div>
+
+  <table class='table' ng-show="playlist.songs.length">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Artists</th>
+        <th>Genres</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="song in playlist.songs" ng-class="{active: song === getCurrentSong() }">
+        <td>
+          <button class="btn btn-default btn-xs" ng-click="toggle(song)">
+            <span class="glyphicon" ng-class="{ 'glyphicon-pause': isPlaying(song), 'glyphicon-play': !isPlaying(song) }"></span>
+          </button>
+        </td>
+        <td>{{ song.name }}</td>
+        <td><span ng-repeat="artist in song.artists">{{ artist.name }}{{ $last ? '' : ', ' }}</span></td>
+        <td>{{ song.genres.join(', ') }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <small ng-hide="playlist.songs.length">No songs.</small>
+  <hr>
+</div>
