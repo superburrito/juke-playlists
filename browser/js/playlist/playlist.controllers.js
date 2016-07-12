@@ -19,16 +19,21 @@ juke.controller('PlaylistFormCtrl',
 	};
 });
 
-
 juke.controller('PlaylistCtrl', 
 	function($scope, $log, PlaylistFactory, SongFactory, PlayerFactory, thePlaylist){
 	
 	console.log('The playlist is ', thePlaylist);
 	$scope.playlist = thePlaylist;
+	$scope.playlist.songs = $scope.playlist.songs.map(function(song){
+		return SongFactory.convert(song); 
+	});
+	console.log('After conversion, the playlist is now', $scope.playlist.songs);
 	SongFactory.fetchAll()
 	.then(function(songs){
 		console.log('songs is ', songs);
-		$scope.songs = songs;
+		return $scope.songs = songs.map(function(song){
+			return SongFactory.convert(song);
+		});
 	});
 
   $scope.isPlaying = function (song) {
